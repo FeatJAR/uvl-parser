@@ -134,6 +134,8 @@ Created uvl-clj/target/uvl-parser-0.1.0-SNAPSHOT-standalone.jar
 
 The `standalone.jar` includes all dependencies, while the other jar ships only the code of the uvl-parser itself, without Clojure or instaparse.
 
+Alternatively, run `mvn install` to create a JAR without Leiningen.
+
 ## Usage from Java
 The class `de.neominik.uvl.UVLParser` exposes the static method `parse(String)` which will return an instance of a `de.neominik.uvl.UVLModel` on success or a `de.neominik.uvl.ParseError` when the input didn't comply to the grammar.
 Printing is implemented in the `toString()`methods of the different model elements in the `UVLModel`.
