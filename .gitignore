@@ -3,7 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=vim,clojure
 
 ### Clojure ###
-pom.xml
+dependency-reduced-pom.xml
 pom.xml.asc
 *.jar
 *.class
