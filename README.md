@@ -1,4 +1,4 @@
-# UVL - Universal Variability Language
+# Parser for the universal variability language
 
 
 [![DOI](https://zenodo.org/badge/377147956.svg)](https://zenodo.org/badge/latestdoi/377147956)
