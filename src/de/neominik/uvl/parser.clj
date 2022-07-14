@@ -97,16 +97,18 @@
 
 (defn file-loader
   ([] (file-loader (str (.getAbsolutePath (File. ".")) "/")))
-  ([absolute]
-   (fn [ns]
-     (let [segments (s/split ns #"\.")
-           re (re-pattern (format "(.*?)%s/?$" (s/join (map #(format "(/%s)?" %) segments))))
-           trimmed-absolute (second (re-find re absolute))
-           relative (str (s/replace ns \. \/) ".uvl")
-           path (str trimmed-absolute "/" relative)]
-       (try
-         (slurp path)
-         (catch FileNotFoundException e (throw (ex-info "Import error" {:error (ParseError. 1 1 (str "Unable to resolve import. Could not find file " (.getMessage e)) [])}))))))))
+  ([absolutePathOrFn]
+   (if (instance? java.util.function.Function absolutePathOrFn)
+     (fn [ns] (.apply absolutePathOrFn ns))
+     (fn [ns]
+       (let [segments (s/split ns #"\.")
+             re (re-pattern (format "(.*?)%s/?$" (s/join (map #(format "(/%s)?" %) segments))))
+             trimmed-absolute (second (re-find re absolutePathOrFn))
+             relative (str (s/replace ns \. \/) ".uvl")
+             path (str trimmed-absolute "/" relative)]
+         (try
+           (slurp path)
+           (catch FileNotFoundException e (throw (ex-info "Import error" {:error (ParseError. 1 1 (str "Unable to resolve import. Could not find file " (.getMessage e)) [])})))))))))
 
 (def ^:dynamic *callback*)
 

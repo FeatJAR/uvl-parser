@@ -5,6 +5,8 @@ import clojure.lang.IFn;
 import de.neominik.uvl.ast.Feature;
 import de.neominik.uvl.ast.ParseError;
 import de.neominik.uvl.ast.UVLModel;
+
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.Map;
 
@@ -20,10 +22,10 @@ public class UVLParser {
   /**
    * Parses the given text and returns an instance of a {@link UVLModel} or a {@link ParseError} on failure.
    * Uses the provided callback function to resolve namespace names from imports to the text from the correct file.
-   * This is the recommended arity of the function to make sure, file resolution works in your project structure.
+   * The callback function must not throw any exceptions.
    */
-  public static Object parse(String text, Function<String, String> fileLoader) {
-  	return parser.invoke(text, fileLoader);
+  public static Object parse(String text, Function<String, String> callback) {
+  	return parser.invoke(text, fileLoader.invoke(callback));
   }
 
   /**
@@ -46,15 +48,15 @@ public class UVLParser {
   /**
    * Resolves the given feature to the correct namespace.
    */
-  public static Feature resolve(Feature f, UVLModel m) {
-  	return (Feature) m.getAllFeatures().get(f.getName());
+  public static Object resolve(Object f, UVLModel m) {
+  	return m.getAllFeatures().get(((Feature) f).getName());
   }
 
   /**
    * @return the attribute map for the given feature
    */
   @SuppressWarnings("unchecked")
-  public static Map<String, Object> getAttributes(Feature f) {
-  	return (Map<String, Object>) f.getAttributes();
+  public static Map<String, Object> getAttributes(Object f) {
+  	return (Map<String, Object>) ((Feature) f).getAttributes();
   }
 }
