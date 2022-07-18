@@ -48,3 +48,7 @@ tags
 .vim
 
 # End of https://www.gitignore.io/api/vim,clojure
+
+.classpath
+.project
+.settings
