@@ -89,7 +89,7 @@
     (s/join "\n" with-tokens)))
 
 (def ws (insta/parser "ws = #'[\\s]+'"))
-(def file (clojure.java.io/resource "uvl.bnf"))
+(def file (clojure.java.io/resource "de/neominik/uvl/uvl.bnf"))
 (def parser (insta/parser (slurp file) :auto-whitespace ws))
 
 (defn- ->ParseError [{:keys [line column text reason]}]

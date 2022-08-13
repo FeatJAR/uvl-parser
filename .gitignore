@@ -52,3 +52,7 @@ tags
 .classpath
 .project
 .settings
+
+.gradle
+/build/
+/.idea/

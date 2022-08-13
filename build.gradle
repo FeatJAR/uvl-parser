@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'dev.clojurephant.clojure' version '0.7.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = 'https://repo.clojars.org/'
+    }
+}
+
+dependencies {
+    implementation 'org.clojure:clojure:1.11.1'
+    implementation 'instaparse:instaparse:1.4.12'
+    implementation 'com.wjoel:clj-bean:0.2.1'
+}
+
+group = 'de.neominik'
+java.sourceCompatibility = 1.8
+
+clojure {
+    builds {
+        main {
+            classpath.from = sourceSets.main.compileClasspath + tasks.named(sourceSets.main.processResourcesTaskName)
+            checkNamespaces = []
+            aotAll()
+        }
+    }
+}
+
+compileJava {
+    classpath += files(sourceSets.main.clojure.classesDirectory)
+}
