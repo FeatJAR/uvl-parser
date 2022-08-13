@@ -33,3 +33,5 @@ clojure {
 compileJava {
     classpath += files(sourceSets.main.clojure.classesDirectory)
 }
+
+['licenseFormat', 'spotlessApply', 'publishToMavenLocal'].each { tasks.register(it) {} }
